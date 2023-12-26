@@ -1,0 +1,284 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: white;
+  --font: #3c4043;
+  --card: white;
+  --hover-card: #f6f8fa;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg);
+  color: var(--font);
+  font-family: "Poppins", sans-serif;
+}
+
+.calc {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.calc-method {
+  background-color: var(--card);
+  padding: 1rem;
+  padding-top: 1.5rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  /*   border: 1px solid red;
+ */
+}
+
+.calc-method span {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.calc-method select {
+  width: 80%;
+  background-color: transparent;
+  border: 1px solid grey;
+  color: var(--font);
+  padding: 1rem;
+  font-size: max(1rem, 1.1vw);
+  border-radius: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+  outline: none;
+}
+
+.calc-method select:focus {
+  border-color: rgb(0, 68, 255);
+}
+
+.calc-method select:hover {
+  background-color: var(--hover-card);
+  transition: 0.3s;
+}
+
+.calc-method select option {
+  background-color: var(--card);
+  border-radius: 10px;
+  font-size: max(1rem, 1.3vw);
+}
+
+.fields {
+  background-color: var(--card);
+  padding: 0;
+  border-radius: 10px;
+  /*   border: 1px solid red;
+ */
+}
+
+.field {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.box-field-note,
+.box-field-weigth {
+  position: relative;
+  width: 40%;
+  display: flex;
+  transition: 0.3s all;
+}
+
+.box-field-note {
+  width: 80%;
+}
+.box-field-weigth {
+  display: none;
+}
+
+.box-field-note input,
+.box-field-weigth input {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--font);
+  color: var(--font);
+  background-color: transparent;
+  border-radius: 5px;
+  outline: none;
+}
+
+.box-field-note input:focus,
+.box-field-weigth input:focus {
+  border-color: rgb(0, 68, 255);
+}
+
+.box-field-note span,
+.box-field-weigth span {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 0.8rem;
+  transition: 0.3s;
+  pointer-events: none;
+  font-size: max(1rem, 1.3vw);
+  padding: 0 0.2rem;
+}
+
+.box-field-note input::placeholder,
+.box-field-weigth input::placeholder {
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.box-field-note input:focus ~ span,
+.box-field-weigth input:focus ~ span {
+  color: rgb(0, 68, 255);
+}
+
+.box-field-note input:focus ~ span,
+.box-field-weigth input:focus ~ span,
+.box-field-note input:not(:placeholder-shown) ~ span,
+.box-field-weigth input:not(:placeholder-shown) ~ span {
+  transform: translateY(-1.8rem);
+  left: 1rem;
+  font-size: 0.9rem;
+  transition: 0.3s;
+  background-color: var(--card);
+}
+
+.box-field-note input:focus::placeholder,
+.box-field-weigth input:focus::placeholder {
+  opacity: 1;
+  transition: 0.4s;
+}
+
+.situacion {
+  width: 20%;
+  position: absolute;
+  right: -30rem;
+  background-color: var(--card);
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  transition: 0.3s;
+}
+
+.close-contain {
+  position: relative;
+}
+
+.close-contain i {
+  border-radius: 50%;
+  background-color: var(--card);
+  position: absolute;
+  top: -0.7rem;
+  left: -0.5rem;
+  font-size: 1.8rem;
+  color: var(--font);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-contain i:hover {
+  color: red;
+  transition: 0.3s;
+}
+
+.result {
+  font-size: 1rem;
+  padding: 4rem 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.result h1 {
+  text-transform: uppercase;
+  font-size: max(1.3rem, 1.8vw);
+  color: var(--font);
+}
+
+.calc-contain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 2rem 1rem;
+  border-radius: 10px;
+  /*   border: 1px solid red;
+ */
+}
+
+#btn-calc {
+  background-color: rgb(0, 68, 255);
+  width: 80%;
+  padding: 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: #f6f8fa;
+  transition: 0.3s;
+}
+
+#btn-calc:hover {
+  background-color: rgb(40, 97, 255);
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 800px) {
+  .calc {
+    width: 90%;
+  }
+
+  .box-field-note input,
+  .box-field-weigth input {
+    padding: 1rem 0.7rem;
+  }
+
+  .box-field-note span,
+  .box-field-weigth span {
+    left: 1rem;
+    bottom: 0.8rem;
+  }
+
+  .box-field-note input:focus ~ span,
+  .box-field-weigth input:focus ~ span,
+  .box-field-note input:not(:placeholder-shown) ~ span,
+  .box-field-weigth input:not(:placeholder-shown) ~ span {
+    transform: translateY(-1.9rem);
+    left: 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .situacion {
+    width: 55%;
+  }
+
+  article {
+    width: 50%;
+  }
+}

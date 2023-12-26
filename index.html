@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Calculadora de Nota Bimestral - AW</title>
+  </head>
+  <body>
+    <main class="calc">
+      <div class="calc-method">
+        <span>Método de Cálculo</span>
+        <select id="method">
+          <option value="DEFAULT">. . .</option>
+          <option value="ARITHMETIC">Aritmética</option>
+          <option value="WEIGHTED">Ponderada</option>
+          <option value="SUM">Soma</option>
+        </select>
+      </div>
+
+      <div class="fields">
+        <div class="field">
+          <div class="box-field-note">
+            <input
+              type="number"
+              placeholder="Sua nota aqui"
+              min="0"
+              max="100"
+            />
+            <span>1° Bimestre</span>
+          </div>
+          <div class="box-field-weigth">
+            <input
+              type="number"
+              placeholder="Peso da nota aqui"
+              min="1"
+              max="100"
+            />
+            <span>Peso</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="box-field-note">
+            <input
+              type="number"
+              placeholder="Sua nota aqui"
+              min="0"
+              max="100"
+            />
+            <span>2° Bimestre</span>
+          </div>
+          <div class="box-field-weigth">
+            <input
+              type="number"
+              placeholder="Peso da nota aqui"
+              min="1"
+              max="100"
+            />
+            <span>Peso</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="box-field-note">
+            <input
+              type="number"
+              placeholder="Sua nota aqui"
+              min="0"
+              max="100"
+            />
+            <span>3° Bimestre</span>
+          </div>
+          <div class="box-field-weigth">
+            <input
+              type="number"
+              placeholder="Peso da nota aqui"
+              min="1"
+              max="100"
+            />
+            <span>Peso</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="box-field-note">
+            <input
+              type="number"
+              placeholder="Sua nota aqui"
+              min="0"
+              max="100"
+            />
+            <span>4° Bimestre</span>
+          </div>
+          <div class="box-field-weigth">
+            <input
+              type="number"
+              placeholder="Peso da nota aqui"
+              min="1"
+              max="100"
+            />
+            <span>Peso</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-contain">
+        <button id="btn-calc">Calcular</button>
+
+        <div class="social-medias">
+          <p>
+            make with <i class="fa-solid fa-heart"></i> by
+            <a href="https://github.com/FuturoDevGalvao" target="_blank"
+              >FuturoDevGalvao</a
+            >
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <div class="situacion">
+      <div class="close-contain">
+        <i class="fa-solid fa-circle-xmark"></i>
+      </div>
+      <div class="result">
+        <h1 id="situacion">Reprovado</h1>
+        <p>Nota final: <span id="avg">0</span></p>
+        <p>
+          Nota necesária:
+          <span id="note">0</span>
+        </p>
+      </div>
+    </div>
+
+    <script
+      src="https://kit.fontawesome.com/638bd1bffb.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
