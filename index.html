@@ -10,6 +10,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/638bd1bffb.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Calculadora de Nota Bimestral - AW</title>
   </head>
   <body>
@@ -33,7 +37,7 @@
               min="0"
               max="100"
             />
-            <span>1° Bimestre</span>
+            <span>1° Nota</span>
           </div>
           <div class="box-field-weigth">
             <input
@@ -54,7 +58,7 @@
               min="0"
               max="100"
             />
-            <span>2° Bimestre</span>
+            <span>2° Nota</span>
           </div>
           <div class="box-field-weigth">
             <input
@@ -75,7 +79,7 @@
               min="0"
               max="100"
             />
-            <span>3° Bimestre</span>
+            <span>3° Nota</span>
           </div>
           <div class="box-field-weigth">
             <input
@@ -96,7 +100,7 @@
               min="0"
               max="100"
             />
-            <span>4° Bimestre</span>
+            <span>4° Nota</span>
           </div>
           <div class="box-field-weigth">
             <input
@@ -109,10 +113,16 @@
           </div>
         </div>
       </div>
-
       <div class="calc-contain">
+        <div class="button-fields-contain">
+          <button id="add-note">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <button id="remove-note">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+        </div>
         <button id="btn-calc">Calcular</button>
-
         <div class="social-medias">
           <p>
             make with <i class="fa-solid fa-heart"></i> by
@@ -133,15 +143,11 @@
         <p>Nota final: <span id="avg">0</span></p>
         <p>
           Nota necesária:
-          <span id="note">0</span>
+          <span id="note-required">0</span>
         </p>
       </div>
     </div>
 
-    <script
-      src="https://kit.fontawesome.com/638bd1bffb.js"
-      crossorigin="anonymous"
-    ></script>
     <script src="./script.js"></script>
   </body>
 </html>

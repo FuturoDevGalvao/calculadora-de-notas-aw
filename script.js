@@ -1,13 +1,15 @@
-const fieldsWeigth = document.querySelectorAll(".box-field-weigth");
-const fieldsNote = document.querySelectorAll(".box-field-note");
 const calcMethod = document.getElementById("method");
-const inputsNotes = document.querySelectorAll(".box-field-note input");
-const inputsWeights = document.querySelectorAll(".box-field-weigth input");
 const situationCard = document.querySelector(".situacion");
 const btnCloseSituacionCard = document.querySelector(".close-contain i");
 const btnCalc = document.getElementById("btn-calc");
+const btnAddNote = document.getElementById("add-note");
+const btnRemoveNote = document.getElementById("remove-note");
 
-calcMethod.addEventListener("change", () => {
+const average = 60;
+
+const toggleFieldStyles = () => {
+  const { fieldsNote, fieldsWeigth } = getFields();
+
   if (calcMethod.value != "WEIGHTED") {
     fieldsWeigth.forEach((fieldWeigth) => (fieldWeigth.style.display = "none"));
 
@@ -17,21 +19,7 @@ calcMethod.addEventListener("change", () => {
 
     fieldsNote.forEach((fieldNote) => (fieldNote.style.width = "40%"));
   }
-});
-
-fieldsNote.forEach((fieldNote) => {
-  fieldNote.addEventListener("change", () => {
-    //calculateAvg();
-    console.log("adicionou ou tirou nota");
-  });
-});
-
-fieldsWeigth.forEach((fieldWeigth) => {
-  fieldWeigth.addEventListener("change", () => {
-    //calculateAvg();
-    console.log("adicionou ou tirou peso");
-  });
-});
+};
 
 const getCalcMethod = (method) => {
   const calcMethods = {
@@ -40,7 +28,7 @@ const getCalcMethod = (method) => {
 
       notes.forEach((note) => (sumNotes += note));
 
-      return sumNotes / notes.length;
+      return (sumNotes / notes.length).toFixed(2);
     },
     WEIGHTED: ({ notes, weights }) => {
       let sumProducts = 0;
@@ -51,10 +39,7 @@ const getCalcMethod = (method) => {
         sumweights += weights[i];
       }
 
-      console.log(sumProducts);
-      console.log(sumweights);
-
-      return sumProducts / sumweights;
+      return (sumProducts / sumweights).toFixed(2);
     },
     SUM: ({ notes }) => {
       let sumNotes = 0;
@@ -70,6 +55,7 @@ const getCalcMethod = (method) => {
 
 const getNotes = (method) => {
   const notes = [];
+  const { inputsNotes } = getInputs();
   const noteDefalt = method != "WEIGHTED" ? 0 : 1;
 
   inputsNotes.forEach((inputNote) => {
@@ -82,6 +68,7 @@ const getNotes = (method) => {
 
 const getWeights = () => {
   const weights = [];
+  const { inputsWeights } = getInputs();
 
   inputsWeights.forEach((inputWeight) => {
     let weigth = inputWeight.value != "" ? parseInt(inputWeight.value) : 1;
@@ -92,15 +79,87 @@ const getWeights = () => {
 };
 
 const getSituacion = (result) => {
-  if (result >= 60) return "aprovado(a)";
-  else return "reprovado(a)";
+  return result >= average ? "aprovado(a)" : "reprovado(a)";
+};
+
+const getNoteRequired = (result) => {
+  return (result < average ? average - result : 0).toFixed(2);
+};
+
+const getFields = () => {
+  const fieldsWeigth = document.querySelectorAll(".box-field-weigth");
+  const fieldsNote = document.querySelectorAll(".box-field-note");
+
+  return { fieldsNote: fieldsNote, fieldsWeigth: fieldsWeigth };
+};
+
+const getInputs = () => {
+  const inputsNotes = document.querySelectorAll(".box-field-note input");
+  const inputsWeights = document.querySelectorAll(".box-field-weigth input");
+
+  return { inputsNotes: inputsNotes, inputsWeights: inputsWeights };
+};
+
+const getNumberOfFields = () => {};
+
+const getFieldsContain = () => {
+  return document.querySelector(".fields");
+};
+
+const getNoteNumbersNynamically = () => {
+  return getFieldsContain().querySelectorAll(".field").length;
+};
+
+const createField = () => {
+  const field = `
+    <div class="field">
+      <div class="box-field-note">
+        <input
+          type="number"
+          placeholder="Sua nota aqui"
+          min="0"
+          max="100"
+        />
+        <span>${getNoteNumbersNynamically() + 1}° Nota</span>
+      </div>
+      <div class="box-field-weigth">
+        <input
+          type="number"
+          placeholder="Peso da nota aqui"
+          min="1"
+          max="100"
+        />
+        <span>Peso</span>
+      </div>
+    </div>`;
+
+  getFieldsContain().insertAdjacentHTML("beforeend", field);
+  toggleFieldStyles();
+  getNoteNumbersNynamically();
+};
+
+const removeField = () => {
+  const fieldsContain = getFieldsContain();
+
+  //console.log(fieldsContain.childElementCount);
+
+  if (fieldsContain.childElementCount > 0) {
+    const lastField = fieldsContain.lastElementChild; // Pega o último filho
+    lastField.remove(); // Remove o último filho
+  } else {
+    console.log("Não há elementos para remover.");
+  }
+
+  getNoteNumbersNynamically();
 };
 
 const setDataSitucionCard = (result) => {
   const situacion = getSituacion(result);
+  const noteRequired = getNoteRequired(result);
 
   situationCard.querySelector("#situacion").innerHTML = situacion;
   situationCard.querySelector("#avg").innerHTML = result;
+  situationCard.querySelector("#note-required").innerHTML = noteRequired;
 
   showSituacionCard();
 };
@@ -116,17 +175,18 @@ const hideSituacionCard = () => {
 const calculateAvg = () => {
   const method = calcMethod.value;
 
-  console.log(method);
-
   if (method == "DEFAULT") return;
 
   const selectedCalcMethod = getCalcMethod(method);
   const notes = getNotes(method);
   const weights = getWeights();
-  const result = selectedCalcMethod({ notes: notes, weights: weights }); // Chamando a função com os parâmetros corretos
+  const result = selectedCalcMethod({ notes: notes, weights: weights });
 
   setDataSitucionCard(result);
 };
 
+calcMethod.addEventListener("change", toggleFieldStyles);
 btnCalc.addEventListener("click", calculateAvg);
 btnCloseSituacionCard.addEventListener("click", hideSituacionCard);
+btnAddNote.addEventListener("click", createField);
+btnRemoveNote.addEventListener("click", removeField);
