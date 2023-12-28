@@ -100,8 +100,6 @@ const getInputs = () => {
   return { inputsNotes: inputsNotes, inputsWeights: inputsWeights };
 };
 
-const getNumberOfFields = () => {};
-
 const getFieldsContain = () => {
   return document.querySelector(".fields");
 };
@@ -135,13 +133,11 @@ const createField = () => {
 
   getFieldsContain().insertAdjacentHTML("beforeend", field);
   toggleFieldStyles();
-  getNoteNumbersNynamically();
+  addListenerInputs();
 };
 
 const removeField = () => {
   const fieldsContain = getFieldsContain();
-
-  //console.log(fieldsContain.childElementCount);
 
   if (fieldsContain.childElementCount > 0) {
     const lastField = fieldsContain.lastElementChild; // Pega o último filho
@@ -149,8 +145,6 @@ const removeField = () => {
   } else {
     console.log("Não há elementos para remover.");
   }
-
-  getNoteNumbersNynamically();
 };
 
 const setDataSitucionCard = (result) => {
@@ -172,21 +166,102 @@ const hideSituacionCard = () => {
   situationCard.style.right = "-30rem";
 };
 
-const calculateAvg = () => {
-  const method = calcMethod.value;
+const isValidateCalcMethod = () => {
+  let validatedCalcMethod = true;
 
-  if (method == "DEFAULT") return;
+  if (calcMethod.value == "DEFAULT") {
+    calcMethod.classList.add("error");
+    validatedCalcMethod = false;
+  } else calcMethod.classList.remove("error");
 
-  const selectedCalcMethod = getCalcMethod(method);
-  const notes = getNotes(method);
-  const weights = getWeights();
-  const result = selectedCalcMethod({ notes: notes, weights: weights });
-
-  setDataSitucionCard(result);
+  return validatedCalcMethod;
 };
 
-calcMethod.addEventListener("change", toggleFieldStyles);
-btnCalc.addEventListener("click", calculateAvg);
-btnCloseSituacionCard.addEventListener("click", hideSituacionCard);
-btnAddNote.addEventListener("click", createField);
-btnRemoveNote.addEventListener("click", removeField);
+const isValidateInputsNotes = (inputsNotes) => {
+  let validatedInputsNotes = true;
+
+  inputsNotes.forEach((inputNote) => {
+    let empty = inputNote.value != "" ? true : false;
+
+    if (!empty) {
+      inputNote.classList.add("error");
+      validatedInputsNotes = false;
+    }
+  });
+
+  return validatedInputsNotes;
+};
+
+const isValidateInputsWeights = (inputsWeights) => {
+  let validatedInputsWeights = true;
+
+  inputsWeights.forEach((inputWeight) => {
+    let empty = inputWeight.value != "" ? true : false;
+
+    if (!empty) {
+      inputWeight.classList.add("error");
+      validatedInputsWeights = false;
+    }
+  });
+
+  return validatedInputsWeights;
+};
+
+const isValidateInputs = (method) => {
+  const { inputsNotes, inputsWeights } = getInputs();
+
+  let isValidNotes = isValidateInputsNotes(inputsNotes);
+  let isValidMethod = isValidateCalcMethod();
+
+  if (method === "WEIGHTED") {
+    let isValidWeights = isValidateInputsWeights(inputsWeights);
+    return isValidNotes && isValidWeights && isValidMethod;
+  }
+
+  return isValidNotes && isValidMethod;
+};
+
+const calculateAvg = () => {
+  const method = calcMethod.value.trim();
+  const validatedInputs = isValidateInputs(method);
+
+  if (validatedInputs && method != "DEFAULT") {
+    const selectedCalcMethod = getCalcMethod(method);
+    const notes = getNotes(method);
+    const weights = getWeights();
+    const result = selectedCalcMethod({ notes: notes, weights: weights });
+    setDataSitucionCard(result);
+  }
+};
+
+const addEventListenerElements = () => {
+  calcMethod.addEventListener("change", () => {
+    toggleFieldStyles();
+    removeErrorStyle(calcMethod);
+  });
+
+  btnCalc.addEventListener("click", calculateAvg);
+  btnCloseSituacionCard.addEventListener("click", hideSituacionCard);
+  btnAddNote.addEventListener("click", createField);
+  btnRemoveNote.addEventListener("click", removeField);
+};
+
+const removeErrorStyle = (element) => {
+  element.classList.remove("error");
+};
+
+const addListenerInputs = () => {
+  const { inputsNotes, inputsWeights } = getInputs();
+  const allInputs = [...inputsNotes, ...inputsWeights];
+
+  allInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      removeErrorStyle(input);
+    });
+  });
+};
+
+window.onload = () => {
+  addEventListenerElements();
+  addListenerInputs();
+};
