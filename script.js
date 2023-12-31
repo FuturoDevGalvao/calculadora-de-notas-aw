@@ -12,11 +12,9 @@ const toggleFieldStyles = () => {
 
   if (calcMethod.value != "WEIGHTED") {
     fieldsWeigth.forEach((fieldWeigth) => (fieldWeigth.style.display = "none"));
-
     fieldsNote.forEach((fieldNote) => (fieldNote.style.width = "80%"));
   } else {
     fieldsWeigth.forEach((fieldWeigth) => (fieldWeigth.style.display = "flex"));
-
     fieldsNote.forEach((fieldNote) => (fieldNote.style.width = "40%"));
   }
 };
@@ -172,15 +170,15 @@ const isValidateCalcMethod = () => {
   if (calcMethod.value == "DEFAULT") {
     calcMethod.classList.add("error");
     validatedCalcMethod = false;
-  } else calcMethod.classList.remove("error");
+  }
 
   return validatedCalcMethod;
 };
 
-const isValidateInputsNotes = (inputsNotes) => {
+const isValidateInputs = (inputs) => {
   let validatedInputsNotes = true;
 
-  inputsNotes.forEach((inputNote) => {
+  inputs.forEach((inputNote) => {
     let empty = inputNote.value != "" ? true : false;
 
     if (!empty) {
@@ -192,29 +190,14 @@ const isValidateInputsNotes = (inputsNotes) => {
   return validatedInputsNotes;
 };
 
-const isValidateInputsWeights = (inputsWeights) => {
-  let validatedInputsWeights = true;
-
-  inputsWeights.forEach((inputWeight) => {
-    let empty = inputWeight.value != "" ? true : false;
-
-    if (!empty) {
-      inputWeight.classList.add("error");
-      validatedInputsWeights = false;
-    }
-  });
-
-  return validatedInputsWeights;
-};
-
-const isValidateInputs = (method) => {
+const isValidated = (method) => {
   const { inputsNotes, inputsWeights } = getInputs();
 
-  let isValidNotes = isValidateInputsNotes(inputsNotes);
+  let isValidNotes = isValidateInputs(inputsNotes);
   let isValidMethod = isValidateCalcMethod();
 
   if (method === "WEIGHTED") {
-    let isValidWeights = isValidateInputsWeights(inputsWeights);
+    let isValidWeights = isValidateInputs(inputsWeights);
     return isValidNotes && isValidWeights && isValidMethod;
   }
 
@@ -223,7 +206,7 @@ const isValidateInputs = (method) => {
 
 const calculateAvg = () => {
   const method = calcMethod.value.trim();
-  const validatedInputs = isValidateInputs(method);
+  const validatedInputs = isValidated(method);
 
   if (validatedInputs && method != "DEFAULT") {
     const selectedCalcMethod = getCalcMethod(method);

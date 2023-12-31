@@ -10,6 +10,7 @@
   --card: white;
   --hover-card: #f6f8fa;
   --theme: #0044ff;
+  --dark-theme: #121212;
 }
 
 body {
@@ -38,8 +39,8 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  /*   border: 1px solid red;
- */
+  animation-name: bounceInDown;
+  animation-duration: 1.2s;
 }
 
 .calc-method span {
@@ -80,13 +81,11 @@ body {
   padding: 0;
   border-radius: 10px;
   transition: 0.3s all;
-  /*   border: 1px solid red;
- */
+  animation-name: bounceInLeft;
+  animation-duration: 1s;
 }
 
 .field {
-  /*   padding: 1rem;
- */
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -236,8 +235,6 @@ body {
   margin-top: 0.4rem;
   padding-bottom: 1rem;
   border-radius: 10px;
-  /*   border: 1px solid red;
- */
 }
 
 #btn-calc {
@@ -252,6 +249,8 @@ body {
   cursor: pointer;
   color: #f6f8fa;
   transition: 0.3s;
+  animation-name: bounceInRight;
+  animation-duration: 1.2s;
 }
 
 #btn-calc:hover {
@@ -278,6 +277,8 @@ body {
   border: none;
   border-radius: 50%;
   cursor: pointer;
+  animation-name: flipInX;
+  animation-duration: 1.2s;
 }
 
 #add-note:hover,
@@ -295,6 +296,29 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
   color: aliceblue;
+}
+
+.social-medias {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation-name: flipInY;
+  animation-duration: 1.3s;
+}
+
+.social-medias i {
+  color: #f73d93;
+}
+
+.social-medias a {
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--font);
+}
+
+.social-medias a:hover {
+  text-decoration: underline;
 }
 
 .error {
