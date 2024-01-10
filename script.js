@@ -176,18 +176,18 @@ const isValidateCalcMethod = () => {
 };
 
 const isValidateInputs = (inputs) => {
-  let validatedInputsNotes = true;
+  let validatedInputs = true;
 
   inputs.forEach((inputNote) => {
-    let empty = inputNote.value != "" ? true : false;
+    let empty = inputNote.value === "" ? true : false;
 
-    if (!empty) {
+    if (empty) {
       inputNote.classList.add("error");
-      validatedInputsNotes = false;
+      validatedInputs = false;
     }
   });
 
-  return validatedInputsNotes;
+  return validatedInputs;
 };
 
 const isValidated = (method) => {
